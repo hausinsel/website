@@ -1,0 +1,356 @@
+/* ============================================================
+   Peter Wiebe — CV
+   Minimalistisches, redaktionelles Design
+   ============================================================ */
+
+:root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --muted: #8a8a85;
+    --line: #e6e4dd;
+    --accent: #2b3a55;
+
+    --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --measure: 720px;
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    transition: border-color 160ms ease, color 160ms ease;
+}
+
+a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* ---------- Layout ---------- */
+.container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 96px 32px 80px;
+}
+
+/* ---------- Header ---------- */
+.header {
+    margin-bottom: 72px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+}
+
+.name {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 0 0 14px;
+}
+
+.role {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    margin: 0 0 32px;
+}
+
+.sep {
+    color: var(--muted);
+    margin: 0 0.35em;
+}
+
+.contact {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 32px;
+    font-size: 0.95rem;
+}
+
+.contact li {
+    color: var(--ink-soft);
+    line-height: 1.5;
+}
+
+.contact .label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 10px;
+    min-width: 60px;
+}
+
+/* ---------- Sections ---------- */
+.section {
+    margin-bottom: 64px;
+}
+
+.section h2 {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 32px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+}
+
+/* ---------- Entries (Bildung / Erfahrung) ---------- */
+.entry {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+}
+
+.entry:last-child {
+    margin-bottom: 0;
+}
+
+.entry-date {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding-top: 6px;
+    letter-spacing: 0.02em;
+}
+
+.entry-body h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.15rem;
+    margin: 0 0 4px;
+    letter-spacing: -0.005em;
+    line-height: 1.35;
+}
+
+.institution {
+    margin: 0 0 10px;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 0.98rem;
+}
+
+.detail {
+    margin: 0;
+    color: var(--ink-soft);
+}
+
+.muted {
+    color: var(--muted);
+    font-style: normal;
+}
+
+.tasks {
+    margin: 10px 0 0;
+    padding: 0;
+}
+
+.tasks li {
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 4px;
+    color: var(--ink-soft);
+}
+
+.tasks li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+}
+
+/* ---------- Skills ---------- */
+.skills-group {
+    margin-bottom: 28px;
+}
+
+.skills-group:last-child {
+    margin-bottom: 0;
+}
+
+.skills-group h4 {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    margin: 0 0 12px;
+}
+
+.skills li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--line);
+}
+
+.skills li:last-child {
+    border-bottom: none;
+}
+
+.skill-name {
+    color: var(--ink);
+}
+
+.skill-level {
+    display: inline-flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.skill-level i {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--line);
+}
+
+.skill-level[data-level="1"] i:nth-child(-n+1),
+.skill-level[data-level="2"] i:nth-child(-n+2),
+.skill-level[data-level="3"] i:nth-child(-n+3),
+.skill-level[data-level="4"] i:nth-child(-n+4),
+.skill-level[data-level="5"] i:nth-child(-n+5) {
+    background: var(--accent);
+}
+
+/* ---------- Interests ---------- */
+.interests {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 8px 32px;
+    margin: 0;
+}
+
+.interests dt {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--ink);
+    padding-top: 2px;
+}
+
+.interests dd {
+    margin: 0 0 14px;
+    color: var(--ink-soft);
+}
+
+.interests dd:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
+}
+
+.footer p {
+    margin: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+    .container {
+        padding: 56px 22px 56px;
+    }
+
+    .contact {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .entry {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    .entry-date {
+        padding-top: 0;
+    }
+
+    .interests {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+
+    .interests dd {
+        margin-bottom: 16px;
+    }
+}
+
+/* ---------- Print ---------- */
+@media print {
+    body {
+        background: white;
+        font-size: 11pt;
+    }
+
+    .container {
+        padding: 24px;
+        max-width: none;
+    }
+
+    a {
+        border-bottom: none;
+        color: var(--ink);
+    }
+
+    .section {
+        page-break-inside: avoid;
+        margin-bottom: 32px;
+    }
+
+    .entry {
+        page-break-inside: avoid;
+    }
+}
