@@ -83,6 +83,9 @@ ul {
     display: block;
     width: 100%;
     height: auto;
+    /* Höhe explizit aus der viewBox ableiten — sonst skaliert Safari den
+       Titel zu klein, weil dort height:auto die viewBox-Ratio ignoriert. */
+    aspect-ratio: 1300 / 112;
     overflow: visible;
 }
 
