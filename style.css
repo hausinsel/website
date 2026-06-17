@@ -75,12 +75,30 @@ ul {
 }
 
 .name {
+    margin: 0 0 14px;
+}
+
+/* Name + Titel als SVG: skaliert auf die Inhaltsbreite, bleibt einzeilig */
+.name-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.name-svg text {
     font-family: var(--font-serif);
     font-weight: 400;
-    font-size: clamp(2.4rem, 6vw, 3.4rem);
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    margin: 0 0 14px;
+    font-size: 100px;
+    letter-spacing: -2px;
+}
+
+.name-svg-main {
+    fill: var(--ink);
+}
+
+.name-svg-sub {
+    fill: var(--muted);
 }
 
 .role {
@@ -97,25 +115,28 @@ ul {
 
 .contact {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: max-content max-content;
+    justify-content: space-between;
     gap: 10px 32px;
     font-size: 0.95rem;
 }
 
 .contact li {
+    display: flex;
+    gap: 12px;
     color: var(--ink-soft);
     line-height: 1.5;
 }
 
 .contact .label {
-    display: inline-block;
+    flex: 0 0 auto;
+    width: 60px;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-right: 10px;
-    min-width: 60px;
+    padding-top: 0.25em;
 }
 
 /* ---------- Sections ---------- */
