@@ -22,7 +22,7 @@
         </h1>
 
         <ul class="contact">
-            <li><span class="label">Adresse</span> Inselstraße 9, 36272 Niederaula, Deutschland</li>
+            <li><span class="label">Adresse</span> Bad Hersfeld, Deutschland</li>
             <li><span class="label">Telefon</span> <a href="tel:+4915170876926">+49 1517 0876 926</a></li>
             <li><span class="label">E-Mail</span> <a href="mailto:peter_wiebe29@web.de">peter_wiebe29@web.de</a></li>
             <li><span class="label">Web</span> <a href="https://cv.peter-wiebe.de">cv.peter-wiebe.de</a></li>
@@ -33,6 +33,7 @@
 
     <section class="section">
         <h2>Bildung</h2>
+        <div class="section-body">
 
         <article class="entry">
             <div class="entry-date">2023 — 2026</div>
@@ -51,10 +52,12 @@
                 <p class="detail">Wirtschaftswissenschaften und Physik als Leistungskurse</p>
             </div>
         </article>
+        </div>
     </section>
 
     <section class="section">
         <h2>Erfahrung</h2>
+        <div class="section-body">
 
         <article class="entry">
             <div class="entry-date">2023 — 2026</div>
@@ -81,10 +84,12 @@
                 </ul>
             </div>
         </article>
+        </div>
     </section>
 
     <section class="section">
         <h2>Qualifikationen</h2>
+        <div class="section-body">
 
         <div class="skills-group">
             <h4>Sprachen</h4>
@@ -153,10 +158,12 @@
                 </li>
             </ul>
         </div>
+        </div>
     </section>
 
     <section class="section">
         <h2>Interessen</h2>
+        <div class="section-body">
         <dl class="interests">
             <dt>Sportschießen</dt>
             <dd>Seit Kindesalter an aktiver Luftgewehr-Schütze in der SGi Mengshausen</dd>
@@ -179,6 +186,7 @@
             <dt>Lesen</dt>
             <dd>Schon immer ein Buch dabei gehabt, ob Roman oder Sachbuch</dd>
         </dl>
+        </div>
     </section>
 
     <footer class="footer">
@@ -186,5 +194,33 @@
     </footer>
 
 </main>
+
+<script>
+    // Kapitel einklappbar machen: beim Laden alle zu, Klick auf die
+    // Überschrift schaltet das jeweilige Kapitel unabhängig um.
+    document.querySelectorAll('.section').forEach(function (section) {
+        var title = section.querySelector('h2');
+        var body = section.querySelector('.section-body');
+        if (!title || !body) return;
+
+        section.classList.add('is-collapsed');
+        title.setAttribute('role', 'button');
+        title.setAttribute('tabindex', '0');
+        title.setAttribute('aria-expanded', 'false');
+
+        function toggle() {
+            var collapsed = section.classList.toggle('is-collapsed');
+            title.setAttribute('aria-expanded', String(!collapsed));
+        }
+
+        title.addEventListener('click', toggle);
+        title.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggle();
+            }
+        });
+    });
+</script>
 </body>
 </html>

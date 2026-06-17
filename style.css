@@ -28,6 +28,9 @@
 html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    /* Platz für die Scrollbar dauerhaft reservieren, damit das Layout
+       beim Auf-/Zuklappen nicht springt (Scrollbar erscheint/verschwindet). */
+    scrollbar-gutter: stable both-edges;
 }
 
 body {
@@ -157,6 +160,19 @@ ul {
     margin: 0 0 32px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Einklappbare Kapitel: Inhalt ausblenden, wenn das Kapitel zu ist.
+   Standard ohne JS = aufgeklappt; das Skript ergänzt .is-collapsed. */
+.section.is-collapsed h2 {
+    margin-bottom: 0;
+}
+
+.section.is-collapsed .section-body {
+    display: none;
 }
 
 /* ---------- Entries (Bildung / Erfahrung) ---------- */
@@ -441,13 +457,18 @@ ul {
     /* ---- Qualifikationen: Skill-Gruppen platzsparend in zwei
        Spalten umbrechen. Greift für jeden Abschnitt, der Skill-
        Gruppen enthält – auch für künftig ergänzte. ---- */
-    .section:has(.skills-group) {
-        columns: 2;
-        column-gap: 32px;
+    /* Eingeklappte Kapitel im Druck immer ausklappen */
+    .section.is-collapsed h2 {
+        margin-bottom: 8px;
     }
 
-    .section:has(.skills-group) h2 {
-        column-span: all;
+    .section.is-collapsed .section-body {
+        display: block;
+    }
+
+    .section-body:has(.skills-group) {
+        columns: 2;
+        column-gap: 32px;
     }
 
     .skills-group {
