@@ -189,13 +189,79 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <p>Peter Wiebe <span class="sep">·</span> Niederaula <span class="sep">·</span> Deutschland</p>
-    </footer>
-
 </main>
 
+<section class="gallery" id="gallery" aria-label="Impressionen" hidden>
+    <div class="gallery-inner">
+        <h2 class="gallery-heading">Impressionen</h2>
+        <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+</section>
+
+<footer class="footer">
+    <p>Peter Wiebe <span class="sep">·</span> Niederaula <span class="sep">·</span> Deutschland</p>
+</footer>
+
+<script src="images/gallery.js"></script>
 <script>
+    // Galerie aus dem Manifest (window.GALLERY) aufbauen. Jeder Eintrag ist
+    // entweder ein Dateiname ("foto.jpg") oder ein Objekt { src, alt }.
+    (function () {
+        var section = document.getElementById('gallery');
+        var grid = document.getElementById('gallery-grid');
+        var items = Array.isArray(window.GALLERY) ? window.GALLERY : [];
+        if (!section || !grid || items.length === 0) return;
+
+        items.forEach(function (item) {
+            var src = typeof item === 'string' ? item : item && item.src;
+            if (!src) return;
+            var alt = (typeof item === 'object' && item.alt) ? item.alt : '';
+
+            var fig = document.createElement('figure');
+            fig.className = 'gallery-item';
+
+            var img = document.createElement('img');
+            img.src = 'images/' + src;
+            img.alt = alt;
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            // Bilder, die nicht laden, lautlos entfernen statt kaputt anzeigen.
+            img.addEventListener('error', function () { fig.remove(); });
+            img.addEventListener('load', function () { fig.classList.add('is-loaded'); });
+
+            fig.appendChild(img);
+            if (alt) {
+                var cap = document.createElement('figcaption');
+                cap.textContent = alt;
+                fig.appendChild(cap);
+            }
+            grid.appendChild(fig);
+        });
+
+        section.hidden = false;
+
+        // Footer ans Ende der Galerie-Seite ziehen, sodass er unten auf dem
+        // Bilderbereich sitzt. Ohne Bilder bleibt er in seiner normalen Position.
+        var footer = document.querySelector('.footer');
+        if (footer) section.appendChild(footer);
+
+        // Dezenter Hinweis, dass unterhalb des CV noch die Galerie kommt.
+        // Verschwindet, sobald der Besucher zu scrollen beginnt.
+        var hint = document.createElement('div');
+        hint.className = 'scroll-hint';
+        hint.setAttribute('aria-hidden', 'true');
+        hint.innerHTML = '<span>Impressionen</span><span class="scroll-hint-chevron"></span>';
+        document.body.appendChild(hint);
+
+        // Hinweis anzeigen, solange man oben auf dem CV ist; ausblenden, sobald
+        // gescrollt bzw. zur Galerie gewechselt wurde. Kommt man zum CV-Anfang
+        // zurück, erscheint er wieder.
+        var updateHint = function () {
+            hint.classList.toggle('is-hidden', window.scrollY > 40);
+        };
+        window.addEventListener('scroll', updateHint, { passive: true });
+    })();
+
     // Kapitel einklappbar machen: beim Laden alle zu, Klick auf die
     // Überschrift schaltet das jeweilige Kapitel unabhängig um.
     document.querySelectorAll('.section').forEach(function (section) {

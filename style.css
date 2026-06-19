@@ -43,6 +43,8 @@ body {
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Verhindert horizontales Scrollen durch die volle Galerie-Breite. */
+    overflow-x: clip;
 }
 
 a {
@@ -68,6 +70,10 @@ ul {
     max-width: var(--measure);
     margin: 0 auto;
     padding: 96px 32px 80px;
+    /* Erste „Seite": der CV füllt mindestens die volle Bildschirmhöhe,
+       die Galerie liegt dadurch zunächst unterhalb des Sichtbereichs. */
+    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 /* ---------- Header ---------- */
@@ -322,10 +328,160 @@ ul {
     margin-bottom: 0;
 }
 
+/* ---------- Galerie ----------
+   Vollbreites Band, das aus der zentrierten Spalte ausbricht. Die Bilder
+   ordnen sich automatisch in Spalten an (Masonry über CSS-columns), egal
+   wie viele es sind. */
+.gallery {
+    /* Eigene Bildschirmseite: nimmt mindestens die volle Höhe ein und
+       rastet beim Scrollen sanft ein. Liegt außerhalb des CV-Containers
+       und ist dadurch von Natur aus volle Fensterbreite. */
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 12vh 0 0;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    /* Footer wird per JS hier hineingezogen und sitzt unten am Rand. */
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery > .footer {
+    margin-top: auto;
+}
+
+.gallery[hidden] {
+    display: none;
+}
+
+.gallery-inner {
+    /* Etwas breiter als der Textinhalt, aber nicht randlos. */
+    max-width: 1180px;
+    /* Abstand nach unten zum Footer spiegelt den oberen 12vh-Abstand der
+       Galerie. margin-top:auto am Footer hält ihn zusätzlich am unteren
+       Rand, falls nur wenige Bilder vorhanden sind. */
+    margin: 0 auto 12vh;
+    padding: 0 32px;
+}
+
+.gallery-heading {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 28px;
+    text-align: center;
+}
+
+.gallery-grid {
+    columns: 3 260px;
+    column-gap: 16px;
+}
+
+.gallery-item {
+    margin: 0 0 16px;
+    break-inside: avoid;
+    overflow: hidden;
+    border-radius: 3px;
+    background: var(--bg);
+}
+
+.gallery-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* Sanftes Einblenden, sobald das Bild geladen ist. */
+    opacity: 0;
+    transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.gallery-item.is-loaded img {
+    opacity: 1;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.03);
+}
+
+.gallery-item figcaption {
+    padding: 8px 10px 10px;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    font-style: italic;
+}
+
+/* ---------- Scroll-Hinweis ----------
+   Schwebt unten mittig auf der ersten Seite und signalisiert die Galerie. */
+.scroll-hint {
+    position: fixed;
+    left: 50%;
+    bottom: 26px;
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    pointer-events: none;
+    opacity: 0;
+    animation: scroll-hint-in 700ms ease 500ms forwards;
+    transition: opacity 350ms ease, transform 350ms ease;
+}
+
+.scroll-hint.is-hidden {
+    /* animation:none ist entscheidend: eine laufende Animation mit
+       fill-forwards würde die Deckkraft sonst auf 1 festhalten und das
+       Ausblenden verhindern. */
+    animation: none;
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+}
+
+/* Auf breiten Screens den Hinweis in die Mitte zwischen Content-Kante und
+   Fensterrand setzen, damit er den Inhalt nicht überdeckt.
+   Content-Breite = 720px (--measure), halbe Breite = 360px. */
+@media (min-width: 900px) {
+    .scroll-hint {
+        left: calc(75% + 180px);
+    }
+}
+
+.scroll-hint-chevron {
+    width: 9px;
+    height: 9px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    animation: scroll-hint-bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-hint-in {
+    to { opacity: 1; }
+}
+
+@keyframes scroll-hint-bounce {
+    0%, 100% { transform: rotate(45deg) translate(0, 0); }
+    50%      { transform: rotate(45deg) translate(2.5px, 2.5px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-hint-chevron {
+        animation: none;
+    }
+}
+
 /* ---------- Footer ---------- */
 .footer {
-    margin-top: 80px;
+    margin-top: 0;
     padding-top: 32px;
+    padding-bottom: 40px;
     border-top: 1px solid var(--line);
     text-align: center;
     color: var(--muted);
@@ -365,6 +521,23 @@ ul {
 
     .interests dd {
         margin-bottom: 16px;
+    }
+
+    .gallery {
+        padding-top: 44px;
+    }
+
+    .gallery-inner {
+        padding: 0 22px;
+    }
+
+    .gallery-grid {
+        columns: 2 150px;
+        column-gap: 12px;
+    }
+
+    .gallery-item {
+        margin-bottom: 12px;
     }
 }
 
@@ -502,5 +675,17 @@ ul {
     .footer {
         margin-top: 14px;
         padding-top: 10px;
+    }
+
+    /* Galerie und Scroll-Hinweis gehören nicht in den gedruckten Lebenslauf. */
+    .gallery,
+    .scroll-hint {
+        display: none !important;
+    }
+
+    /* Vollbild-Höhe für den Druck zurücknehmen, sonst entsteht eine
+       fast leere erste Seite. */
+    .container {
+        min-height: 0;
     }
 }
