@@ -7,12 +7,5 @@
    erneut ausfuehren.
    ============================================================ */
 window.GALLERY = [
-    "01-berge.jpg",
-    "02-strand.jpg",
-    "03-wald.jpg",
-    "04-stadt.jpg",
-    "05-see.jpg",
-    "06-bruecke.jpg",
-    "07-feld.jpg",
-    "08-hafen.jpg",
+    "rikscha-lullusfest.jpeg",
 ];
